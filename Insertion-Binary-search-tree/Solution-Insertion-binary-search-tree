@@ -1,0 +1,39 @@
+ /* Node is defined as :
+ class Node 
+    int data;
+    Node left;
+    Node right;
+    
+    */
+
+static Node Insert(Node root,int value) {
+
+    if(root == null){
+        Node onlyOneElement = new Node();
+        onlyOneElement.data = value;
+        return onlyOneElement;   
+    }
+    
+        Queue<Node> queue = new LinkedList<Node>();
+        Node newRoot = root;
+        Node insertThis = new Node();
+        insertThis.data = value;
+        Node prev=null;
+    
+          while(root!=null){
+              prev=root;
+              if(value<=root.data){
+                  root=root.left;
+              }
+              else
+                  root=root.right;
+          }
+          if(value>prev.data)
+              prev.right=insertThis;
+          else
+              prev.left=insertThis;
+
+      return newRoot;
+    }
+
+
