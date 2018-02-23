@@ -1,0 +1,43 @@
+   /* 
+    
+    class Node 
+       int data;
+       Node left;
+       Node right;
+   */
+   void topView(Node root) {
+      
+       if(root.left == null && root.right == null) System.out.print(root.data + " ");
+        Deque<Node> stack = new ArrayDeque<Node>();
+       
+       Node lLeaf = root;
+       Node rLeaf = root;
+       if (root.left != null && root.right != null){
+           rLeaf = root.right;
+       } else {
+           rLeaf = root;
+       }
+       while(lLeaf.left != null){
+          //System.out.print(lLeaf.data + " ");
+          stack.push(lLeaf);
+          lLeaf = lLeaf.left;
+          if(lLeaf.left == null ){
+              System.out.print(lLeaf.data + " ");
+              while(!stack.isEmpty()){
+                  lLeaf = stack.pop();
+                  System.out.print(lLeaf.data + " ");
+              }
+              break;
+              
+          } 
+      }
+     
+       
+      while(rLeaf.right != null){
+          System.out.print(rLeaf.data + " ");
+          rLeaf = rLeaf.right;
+          if(rLeaf.right == null ) System.out.print(rLeaf.data + " ");
+      }
+       
+       
+    }
