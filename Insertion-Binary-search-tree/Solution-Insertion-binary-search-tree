@@ -14,26 +14,26 @@ static Node Insert(Node root,int value) {
         return onlyOneElement;   
     }
     
-        Queue<Node> queue = new LinkedList<Node>();
+       
         Node newRoot = root;
         Node insertThis = new Node();
         insertThis.data = value;
         Node prev=null;
     
-          while(root!=null){
-              prev=root;
-              if(value<=root.data){
-                  root=root.left;
+          while(root != null){
+              prev = root;
+              if(value <= root.data){
+                  root = root.left;
               }
-              else
-                  root=root.right;
+              else{
+                  root = root.right;
+              }
+                  
           }
-          if(value>prev.data)
-              prev.right=insertThis;
+          if(value > prev.data)
+              prev.right = insertThis;
           else
-              prev.left=insertThis;
+              prev.left = insertThis;
 
       return newRoot;
     }
-
-
