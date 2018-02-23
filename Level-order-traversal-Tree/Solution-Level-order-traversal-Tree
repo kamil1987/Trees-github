@@ -1,0 +1,28 @@
+   /* 
+    
+    class Node 
+       int data;
+       Node left;
+       Node right;
+   */
+   void levelOrder(Node root) {
+     
+     Queue<Node> queue = new LinkedList<Node>();
+     System.out.print( root.data + " ");
+    
+     while(queue.peek() != null || root != null){
+
+             if(root.left != null){
+                 queue.add(root.left);
+             }
+             if(root.right != null){
+                 queue.add(root.right);
+             }
+             
+             root = queue.poll();
+             System.out.print( root.data + " ");
+     }
+       
+    
+      
+    }
