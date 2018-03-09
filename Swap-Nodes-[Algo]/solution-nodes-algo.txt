@@ -1,0 +1,36 @@
+import java.io.*;
+import java.util.*;
+import java.text.*;
+import java.math.*;
+import java.util.regex.*;
+
+public class Solution {
+
+    public static void main(String[] args) {
+        /* Enter your code here. Read input from STDIN. Print output to STDOUT. Your class should be named Solution. */
+        
+        //trzeba stworzyc klase Node i zbudowac drzewo
+        //wypelnic
+        //zrobic swap - uzywajac level order traversal, np zapisac level do listy, odwrocic liste i ponownie wypelnic drzewo
+        // uwaga, wynik jest drukowany od lewej do prawej, dokladnie przeczytaj polecenie. 
+        
+        Scanner in = new Scanner(System.in);
+        int n = in.nextInt();
+        int k = in.nextInt();
+        int[] leafs = new int[n];
+        
+        for(int arr_i = 0; arr_i < n; arr_i++){
+            leafs[arr_i] = in.nextInt();
+        }
+        
+        int t = in.nextInt();
+        int [] swapLevels = new int [t];
+        for(int arr_i = 0; arr_i < t; arr_i++){
+            swapLevels[arr_i] = in.nextInt();
+        }
+        
+        int result = pairs(k, arr);
+        System.out.println(result);
+        in.close();
+    }
+}
