@@ -4,33 +4,130 @@ import java.text.*;
 import java.math.*;
 import java.util.regex.*;
 
+class Node{
+    int data;
+    int depth;
+    Node left;
+    Node right;
+}
+
 public class Solution {
 
     public static void main(String[] args) {
         /* Enter your code here. Read input from STDIN. Print output to STDOUT. Your class should be named Solution. */
-        
+
         //trzeba stworzyc klase Node i zbudowac drzewo
         //wypelnic
         //zrobic swap - uzywajac level order traversal, np zapisac level do listy, odwrocic liste i ponownie wypelnic drzewo
-        // uwaga, wynik jest drukowany od lewej do prawej, dokladnie przeczytaj polecenie. 
-        
+        // uwaga, wynik jest drukowany od lewej do prawej, dokladnie przeczytaj polecenie.
+
+
         Scanner in = new Scanner(System.in);
-        int n = in.nextInt();
-        int k = in.nextInt();
-        int[] leafs = new int[n];
+        int nomberOfNodes = Integer.parseInt(in.nextLine());
+        Node root = new Node();
+        Node result = root;
+        root.data = 1;
+        root.depth = 1;
+
+
+        //Tworzenie i wyplenianie drzewa
+
+        Queue<Node> queue = new LinkedList<Node>();
+                    while(queue.peek() != null || root != null){
+
+                        String readLine = in.nextLine();
+                        String [] dataNodeString = readLine.split(" ");
+                        int [] dataNode = new int[2];
+                        dataNode[0] = Integer.parseInt(dataNodeString[0]);
+                        dataNode[1] = Integer.parseInt(dataNodeString[1]);
+
+                        if(root.left == null && dataNode[0] != -1){
+                            root.left = new Node();
+                            //root = root.left;
+                            root.left.data = dataNode[0];
+                            root.left.depth = root.depth + 1;
+                            queue.add(root.left);
+                        }
+                        if(root.right == null && dataNode[1] != -1){
+                            root.right = new Node();
+                            //root = root.right;
+                            root.right.data = dataNode[1];
+                            root.right.depth = root.depth + 1;
+                            queue.add(root.right);
+                        }
+
+                        root = queue.poll();
+                    }
         
-        for(int arr_i = 0; arr_i < n; arr_i++){
-            leafs[arr_i] = in.nextInt();
-        }
-        
+
+        //ilosc zmian i na jakich glebokosciach
         int t = in.nextInt();
         int [] swapLevels = new int [t];
-        for(int arr_i = 0; arr_i < t; arr_i++){
-            swapLevels[arr_i] = in.nextInt();
-        }
+                for(int arr_i = 0; arr_i < t; arr_i++){
+                    swapLevels[arr_i] = in.nextInt();  
+                }
         
-        int result = pairs(k, arr);
-        System.out.println(result);
+        
+        //levelOrder(result);
+        
+        //zamien i drukuj rezultat
+        swapNodes(result, swapLevels);
+       
+        //System.out.println();
+         //levelOrder(result);
+        
         in.close();
+    }
+    
+         static void swapNodes(Node root, int [] swapLevels) {
+             
+                     Queue<Node> queue = new LinkedList<Node>();
+
+                     for(int i = 0 ; i < swapLevels.length ; i++){
+                         for(int j = i ; j < swapLevels.length ; j++){
+                             Node node = root;
+                             
+                             while(queue.peek() != null || node != null){
+
+                                     if(node.left != null) queue.add(node.left);
+
+                                     if(node.right != null) queue.add(node.right);
+                                         
+                                    if(swapLevels[j] == node.depth){
+                                        Node temp = node.right;
+                                        node.right = node.left;
+                                        node.left = temp;
+                                        break;
+                                    }
+                                    node = queue.poll();
+                             }
+                        }
+                         
+                         // tutaj drukowac drzewo, najpierw zmienione liscie
+                         System.out.println();
+                     }
+
+        }
+    
+        static void levelOrder(Node root) {
+
+         Queue<Node> queue = new LinkedList<Node>();
+         //System.out.print( root.data + " ");
+
+         while(queue.peek() != null || root != null){
+
+                 if(root.left != null){
+                     queue.add(root.left);
+                 }
+                 if(root.right != null){
+                     queue.add(root.right);
+                 }
+                 System.out.print( root.data + " ");
+                 root = queue.poll();
+                 
+         }
+       
+    
+      
     }
 }
