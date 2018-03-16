@@ -11,16 +11,11 @@ class Node{
     Node right;
 }
 
+
 public class Solution {
 
     public static void main(String[] args) {
         /* Enter your code here. Read input from STDIN. Print output to STDOUT. Your class should be named Solution. */
-
-        //trzeba stworzyc klase Node i zbudowac drzewo
-        //wypelnic
-        //zrobic swap - uzywajac level order traversal, np zapisac level do listy, odwrocic liste i ponownie wypelnic drzewo
-        // uwaga, wynik jest drukowany od lewej do prawej, dokladnie przeczytaj polecenie.
-
 
         Scanner in = new Scanner(System.in);
         int nomberOfNodes = Integer.parseInt(in.nextLine());
@@ -55,79 +50,51 @@ public class Solution {
                             root.right.depth = root.depth + 1;
                             queue.add(root.right);
                         }
-
                         root = queue.poll();
                     }
-        
-
+ 
         //ilosc zmian i na jakich glebokosciach
         int t = in.nextInt();
         int [] swapLevels = new int [t];
-                for(int arr_i = 0; arr_i < t; arr_i++){
-                    swapLevels[arr_i] = in.nextInt();  
-                }
-        
-        
-        //levelOrder(result);
-        
+        for(int arr_i = 0; arr_i < t; arr_i++){
+            swapLevels[arr_i] = in.nextInt();  
+        }
+
         //zamien i drukuj rezultat
         swapNodes(result, swapLevels);
-       
-        //System.out.println();
-         //levelOrder(result);
-        
         in.close();
     }
     
          static void swapNodes(Node root, int [] swapLevels) {
-             
-                     Queue<Node> queue = new LinkedList<Node>();
+                     
 
                      for(int i = 0 ; i < swapLevels.length ; i++){
-                         for(int j = i ; j < swapLevels.length ; j++){
                              Node node = root;
-                             
+                            Queue<Node> queue = new LinkedList<Node>();
                              while(queue.peek() != null || node != null){
-
-                                     if(node.left != null) queue.add(node.left);
-
-                                     if(node.right != null) queue.add(node.right);
-                                         
-                                    if(swapLevels[j] == node.depth){
+                                              
+                                  // zmien kazda warstwe gdzie depth jest rowne 2K, 3K ...
+                                    if( node.depth % swapLevels[i] == 0){
                                         Node temp = node.right;
                                         node.right = node.left;
                                         node.left = temp;
-                                        break;
                                     }
+                                
+                                    if(node.left != null) queue.add(node.left);
+                                    if(node.right != null) queue.add(node.right);
                                     node = queue.poll();
                              }
-                        }
-                         
-                         // tutaj drukowac drzewo, najpierw zmienione liscie
-                         System.out.println();
+                         inorderPrint(root);
+                          System.out.println();
                      }
 
         }
     
-        static void levelOrder(Node root) {
-
-         Queue<Node> queue = new LinkedList<Node>();
-         //System.out.print( root.data + " ");
-
-         while(queue.peek() != null || root != null){
-
-                 if(root.left != null){
-                     queue.add(root.left);
-                 }
-                 if(root.right != null){
-                     queue.add(root.right);
-                 }
-                 System.out.print( root.data + " ");
-                 root = queue.poll();
-                 
-         }
-       
-    
-      
+      public static void inorderPrint(Node root){
+        if (root != null){
+            inorderPrint(root.left);
+            System.out.print(root.data + " ");
+            inorderPrint(root.right);
+        }
     }
 }
